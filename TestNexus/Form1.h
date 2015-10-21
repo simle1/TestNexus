@@ -52,6 +52,7 @@ namespace TestNexus {
 	private: System::Windows::Forms::Label^  score;
 	private: System::Windows::Forms::Label^  highScore;
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Button^  button4;
 	private: System::ComponentModel::IContainer^  components;
 	protected: 
 
@@ -77,6 +78,7 @@ namespace TestNexus {
 			this->score = (gcnew System::Windows::Forms::Label());
 			this->highScore = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,7 +98,7 @@ namespace TestNexus {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::Chartreuse;
-			this->button1->Location = System::Drawing::Point(380, 251);
+			this->button1->Location = System::Drawing::Point(380, 243);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(143, 30);
 			this->button1->TabIndex = 1;
@@ -114,7 +116,7 @@ namespace TestNexus {
 			this->button2->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->button2->ForeColor = System::Drawing::Color::Chartreuse;
-			this->button2->Location = System::Drawing::Point(380, 287);
+			this->button2->Location = System::Drawing::Point(380, 315);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(143, 30);
 			this->button2->TabIndex = 2;
@@ -128,7 +130,7 @@ namespace TestNexus {
 			this->button3->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::Chartreuse;
-			this->button3->Location = System::Drawing::Point(380, 323);
+			this->button3->Location = System::Drawing::Point(380, 351);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(143, 30);
 			this->button3->TabIndex = 3;
@@ -142,7 +144,7 @@ namespace TestNexus {
 			this->score->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->score->ForeColor = System::Drawing::Color::Chartreuse;
-			this->score->Location = System::Drawing::Point(380, 123);
+			this->score->Location = System::Drawing::Point(419, 123);
 			this->score->Name = L"score";
 			this->score->Size = System::Drawing::Size(73, 23);
 			this->score->TabIndex = 4;
@@ -172,12 +174,27 @@ namespace TestNexus {
 			this->label1->TabIndex = 6;
 			this->label1->Text = L"NEXUS 2000";
 			// 
+			// button4
+			// 
+			this->button4->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->button4->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->button4->ForeColor = System::Drawing::Color::Chartreuse;
+			this->button4->Location = System::Drawing::Point(380, 279);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(143, 30);
+			this->button4->TabIndex = 7;
+			this->button4->Text = L"UNDO";
+			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &Form1::button4_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::CadetBlue;
 			this->ClientSize = System::Drawing::Size(535, 395);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->highScore);
 			this->Controls->Add(this->score);
@@ -239,9 +256,14 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 				 else{
 					 game.setGameStarted(false);
 					 timer1->Stop();
-					 MessageBox::Show("Game Over!","Message", MessageBoxButtons::OK);
+					 MessageBox::Show("Game Over! You've scored: " + game.getCurrentScore(),"Game Over", MessageBoxButtons::OK);
 				 }
 			 }
+		 }
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+			 game.undo();
+			 pictureBox1->Invalidate();
+			 pictureBox1->Update();
 		 }
 };
 }

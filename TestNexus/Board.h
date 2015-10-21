@@ -4,7 +4,6 @@
 	
 */
 
-
 #pragma once
 #include <vector>
 #include <math.h>
@@ -27,10 +26,13 @@ class Board
 {
 	//boardM set to 9x9 grid
 	int boardM[BOARD_HEIGHT][BOARD_WIDTH];
+	int previousState[BOARD_HEIGHT][BOARD_WIDTH];
 
 	bool selectedNode;
 	int currentScore;
+	int previousScore;
 	int highScore;
+	int lastScore;
 	
 	//vector list of empty cells on grid
 	std::vector<Node> emptyCell;
@@ -52,7 +54,8 @@ public:
 	
 	void checkVertical();
 	void checkHorizontal();
-	void checkDiagonal();
+	void checkLDiagonal();
+	void checkRDiagonal();
 	
 	//move the node when path is found
 	void moveNode(System::Windows::Forms::MouseEventArgs^  e);
@@ -64,6 +67,7 @@ public:
 	int getCurrentScore() { return currentScore; }
 	int getHighScore() { return highScore; }
 	bool endState();
+	void lastState();
 };
 
 #endif

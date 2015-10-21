@@ -2,7 +2,7 @@
 	Leonard Sim
 	Nexus 2000, C++ Programming
 	
-	Links togeher the drawer and board
+	Links together the drawer and board
 */
 
 
@@ -50,9 +50,14 @@ void GameManager::move(System::Windows::Forms::MouseEventArgs^  e){
 void GameManager::checkLines(){
 	pBoard->checkVertical();
 	pBoard->checkHorizontal();
-	pBoard->checkDiagonal();
+	pBoard->checkRDiagonal();
+	pBoard->checkLDiagonal();
 }
 
 bool GameManager::endState(){
 	return pBoard->endState();
+}
+
+void GameManager::undo(){
+	pBoard->lastState();
 }

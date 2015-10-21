@@ -133,7 +133,38 @@ void Board::checkHorizontal(){
 }
 
 //check diagonal nodes and deletes when there's 5 nodes alligned 
-void Board::checkDiagonal(){
+void Board::checkLDiagonal(){
+	Node n;
+	int nextArea = 1;
+
+	for(int i = 0; i < BOARD_HEIGHT; i++){
+		for (int j = 0; j < BOARD_WIDTH; j++){
+			if(boardM[i][j] != 0){
+				n.posX = i;
+				n.posY = j;
+				nodesToDelete.push_back(n);
+
+				//checks if i & j are not out of bound and the value inside the current board
+				//is the same as the next one then add the node.posX & nodeposY into nodesToDelete and increment nextArea  
+				while((i + nextArea != BOARD_HEIGHT) && (j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i + nextArea][j + nextArea])){
+					n.posX = i + nextArea;
+					n.posY = j + nextArea;
+					nodesToDelete.push_back(n);
+					nextArea++;
+				}
+
+				if (nodesToDelete.size() >= 5){
+					deleteLine();
+				}
+			}
+			//clear the vector after line deleted and reset nextArea to 1
+			nodesToDelete.clear();
+			nextArea = 1;
+		}
+	}
+}
+
+void Board::checkRDiagonal(){
 	Node n;
 	int nextArea = 1;
 
@@ -169,6 +200,11 @@ void Board::deleteLine(){
 		boardM[nodesToDelete[i].posX][nodesToDelete[i].posY] = 0;
 		//adds 10 to currentScore for every node removed
 		currentScore += 10;
+
+		Node n;
+		n.posX = nodesToDelete[i].posX;
+		n.posY = nodesToDelete[i].posY;
+		emptyCell.push_back(n);
 
 		if(currentScore >= highScore){
 			highScore = currentScore;
@@ -301,6 +337,13 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 		}
 	}
 
+	for(int i = 0; i < BOARD_HEIGHT; i++){
+		for(int j = 0; j < BOARD_WIDTH; j++){
+			previousState[i][j] = boardM[i][j];
+			lastScore = currentScore;
+		}
+	}
+
 	return pathToGoal;
 }
 
@@ -366,6 +409,7 @@ void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 	}
 }
 
+//checks endstate
 bool Board::endState(){
 	int count = 0;
 
@@ -383,4 +427,13 @@ bool Board::endState(){
 	else{
 		return false;
 	}
+}
+
+void Board::lastState(){
+	for(int i = 0; i < BOARD_HEIGHT; i++){
+		for(int j = 0; j < BOARD_WIDTH; j++){
+			boardM[i][j] = previousState[i][j];
+		}
+	}
+	currentScore = lastScore;
 }

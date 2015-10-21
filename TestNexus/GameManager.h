@@ -26,6 +26,7 @@ public:
 	void gameStart(void);
 	void drawAll();
 	void addThreeNodes();
+	void undo();
 	void checkLines();
 	void move(System::Windows::Forms::MouseEventArgs^  e);
 	void setGameStarted(bool state){ gameStarted = state; }
