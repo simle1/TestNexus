@@ -12,26 +12,8 @@
 struct Node{
 	int posX;
 	int posY;
+	int count;
 	
-	Node *parent;
-	float G;
-	float H;
-
-	Node(){ parent = 0; }
-	Node(int x, int y, Node *_parent = NULL){
-		posX = x;
-		posY = y;
-		G = 0;
-		H = 0;
-	}
-	
-	float GetF() { return G + H; }
-	float ManHattanDistance(Node *nodeEnd){
-		float x = (float)(fabs((float)(this->posX - nodeEnd->posX)));
-		float y = (float)(fabs((float)(this->posY - nodeEnd->posY)));
-
-		return x + y;
-	}
 };
 
 class Board
@@ -40,12 +22,12 @@ class Board
 	std::vector<Node> emptyCell;
 	std::vector<Node> nodesToDelete;
 	bool selectedNode;
-	/*
+	
 	int eventPosX;
 	int eventPosY;
 	int initialEX;
 	int initialEY;
-	*/
+	
 
 public:
 	Board(void);
@@ -57,12 +39,11 @@ public:
 	void checkDiagonal();
 
 	void moveNode(System::Windows::Forms::MouseEventArgs^  e);
+	std::vector<Node> findPath(int startX, int startY, int goalX, int goalY);
 
 	void deleteLine();
 	void generateNode();
 	char cellType(int x, int y);
-
-
 };
 
 #endif
