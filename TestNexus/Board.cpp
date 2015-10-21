@@ -144,9 +144,9 @@ void Board::checkLDiagonal(){
 				n.posY = j;
 				nodesToDelete.push_back(n);
 
-				//checks if i & j are not out of bound and the value inside the current board
+				//checks if j are not out of bound and the value inside the current board
 				//is the same as the next one then add the node.posX & nodeposY into nodesToDelete and increment nextArea  
-				while((i + nextArea != BOARD_HEIGHT) && (j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i + nextArea][j + nextArea])){
+				while((j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i + nextArea][j + nextArea])){
 					n.posX = i + nextArea;
 					n.posY = j + nextArea;
 					nodesToDelete.push_back(n);
@@ -175,10 +175,10 @@ void Board::checkRDiagonal(){
 				n.posY = j;
 				nodesToDelete.push_back(n);
 
-				//checks if i & j are not out of bound and the value inside the current board
+				//checks if j are not out of bound and the value inside the current board
 				//is the same as the next one then add the node.posX & nodeposY into nodesToDelete and increment nextArea  
-				while((i + nextArea != BOARD_HEIGHT) && (j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i + nextArea][j + nextArea])){
-					n.posX = i + nextArea;
+				while((j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i - nextArea][j + nextArea])){
+					n.posX = i - nextArea;
 					n.posY = j + nextArea;
 					nodesToDelete.push_back(n);
 					nextArea++;
