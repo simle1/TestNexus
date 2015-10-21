@@ -22,6 +22,7 @@ class Board
 	std::vector<Node> emptyCell;
 	std::vector<Node> nodesToDelete;
 	bool selectedNode;
+	int currentScore;
 	
 	int eventPosX;
 	int eventPosY;
@@ -44,6 +45,7 @@ public:
 	void deleteLine();
 	void generateNode();
 	char cellType(int x, int y);
+	int getCurrentScore() { return currentScore; }
 };
 
 #endif

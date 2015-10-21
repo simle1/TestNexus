@@ -10,7 +10,7 @@
 class GameManager
 {
 	Board *pBoard;
-	int totalScore;
+	int currentScore;
 	bool gameStarted;
 	
 public:
@@ -20,7 +20,8 @@ public:
 	void addThreeNodes();
 	void isValidMove(System::Windows::Forms::MouseEventArgs^  e);
 	void checkLines();
-	inline bool isGameStarted(){ return gameStarted; };
+	inline bool isGameStarted(){ return gameStarted; }
+	int getCurrentScore(){ return currentScore; }
 
 };
 

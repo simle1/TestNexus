@@ -49,6 +49,7 @@ namespace TestNexus {
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::Label^  score;
 	private: System::ComponentModel::IContainer^  components;
 	protected: 
 
@@ -71,6 +72,7 @@ namespace TestNexus {
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->score = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,6 +98,10 @@ namespace TestNexus {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 			// 
+			// timer1
+			// 
+			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
+			// 
 			// button2
 			// 
 			this->button2->Location = System::Drawing::Point(380, 307);
@@ -116,11 +122,21 @@ namespace TestNexus {
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click);
 			// 
+			// score
+			// 
+			this->score->AutoSize = true;
+			this->score->Location = System::Drawing::Point(397, 64);
+			this->score->Name = L"score";
+			this->score->Size = System::Drawing::Size(47, 13);
+			this->score->TabIndex = 4;
+			this->score->Text = L"Score: 0";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(535, 385);
+			this->Controls->Add(this->score);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -129,6 +145,7 @@ namespace TestNexus {
 			this->Text = L"Form1";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -157,5 +174,10 @@ namespace TestNexus {
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 				 Application::Exit();
 			 }
+private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
+			 if(!game.isGameStarted()){
+				 score->Text = "Score: " + game.getCurrentScore();
+			 }
+		 }
 };
 }

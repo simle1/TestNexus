@@ -7,10 +7,10 @@ GameManager::GameManager(void)
 {
 	pBoard = 0;
 	pBoard = new Board();
+	currentScore = pBoard->getCurrentScore();
 }
 
 void GameManager::gameStart(void){
-	totalScore = 0;
 	gameStarted = true;
 }
 
@@ -30,6 +30,7 @@ void GameManager::addThreeNodes(){
 void GameManager::isValidMove(System::Windows::Forms::MouseEventArgs^  e){
 	pBoard->moveNode(e);
 	checkLines();
+	currentScore = pBoard->getCurrentScore();
 }
 
 void GameManager::checkLines(){

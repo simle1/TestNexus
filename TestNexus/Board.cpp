@@ -9,6 +9,7 @@
 Board::Board(void)
 {
 	initBoard();
+	currentScore = 0;
 }
 
 void Board::initBoard(){
@@ -143,6 +144,7 @@ void Board::deleteLine(){
 	for(int i = 0; i < nodesToDelete.size(); i++){
 		boardM[nodesToDelete[i].posX][nodesToDelete[i].posY] = 0;
 	}
+	currentScore += 25;
 }
 
 std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
