@@ -1,3 +1,10 @@
+/*
+	Leonard Sim
+	Nexus 2000, C++ Programming
+	
+	Credits to Stephen Clark for helping out in coming up with A* pathfinding
+*/
+
 #include "Board.h"
 #include "Drawer.h"
 #include <string>
@@ -11,10 +18,12 @@ Board::Board(void)
 	initBoard();
 }
 
+//initialise the board and other elements
 void Board::initBoard(){
 	emptyCell.clear();
 	currentScore = 0;
-
+	
+	//if currentScore is less than highScore then do nothing else initialize highScore to be 0
 	if (currentScore < highScore){
 	}
 	else{
@@ -57,6 +66,7 @@ void Board::generateNode(){
 	emptyCell.erase(emptyCell.begin() + prand);
 }
 
+//check vertical nodes and deletes when there's 5 nodes alligned 
 void Board::checkVertical(){
 	Node n;
 	int nextArea = 1;
@@ -66,27 +76,31 @@ void Board::checkVertical(){
 	for(int i = 0; i < BOARD_HEIGHT; i++){
 		for (int j = 0; j < BOARD_WIDTH; j++){
 			if(boardM[i][j] != 0){
-				//initialize vector
 				n.posX = i;
 				n.posY = j;
 				nodesToDelete.push_back(n);
-
+				
+				//checks if i is not out of bound and the value inside the current board
+				//is the same as the next one then add the node.posX into nodesToDelete and increment nextArea 
 				while((i + nextArea != BOARD_HEIGHT) && (boardM[i][j] == boardM[i + nextArea][j])){
 					n.posX = i + nextArea;
 					nodesToDelete.push_back(n);
 					nextArea++;
 				}
-
+				
+				//when nodesToDelete is larger than or equal to 5 then call deletLine method
 				if (nodesToDelete.size() >= 5){
 					deleteLine();
 				}
 			}
+			//clear the vector after line deleted and reset nextArea to 1
 			nodesToDelete.clear();
 			nextArea = 1;
 		}
 	}
 }
 
+//check horizontal nodes and deletes when there's 5 nodes alligned 
 void Board::checkHorizontal(){
 	Node n;
 	int nextArea = 1;
@@ -94,28 +108,31 @@ void Board::checkHorizontal(){
 	for(int i = 0; i < BOARD_HEIGHT; i++){
 		for (int j = 0; j < BOARD_WIDTH; j++){
 			if(boardM[i][j] != 0){
-				//initialize vector
 				n.posX = i;
 				n.posY = j;
 				nodesToDelete.push_back(n);
 
-				//if the 
+				//checks if j is not out of bound and the value inside the current board
+				//is the same as the next one then add the node.posY into nodesToDelete and increment nextArea 
 				while((j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i][j + nextArea])){
 					n.posY = j + nextArea;
 					nodesToDelete.push_back(n);
 					nextArea++;
 				}
-
+				
+				//when nodesToDelete is larger than or equal to 5 then call deletLine method
 				if (nodesToDelete.size() >= 5){
 					deleteLine();
 				}
 			}
+			//clear the vector after line deleted and reset nextArea to 1
 			nodesToDelete.clear();
 			nextArea = 1;
 		}
 	}
 }
 
+//check diagonal nodes and deletes when there's 5 nodes alligned 
 void Board::checkDiagonal(){
 	Node n;
 	int nextArea = 1;
@@ -123,12 +140,12 @@ void Board::checkDiagonal(){
 	for(int i = 0; i < BOARD_HEIGHT; i++){
 		for (int j = 0; j < BOARD_WIDTH; j++){
 			if(boardM[i][j] != 0){
-				//initialize vector
 				n.posX = i;
 				n.posY = j;
 				nodesToDelete.push_back(n);
 
-				//if the 
+				//checks if i & j are not out of bound and the value inside the current board
+				//is the same as the next one then add the node.posX & nodeposY into nodesToDelete and increment nextArea  
 				while((i + nextArea != BOARD_HEIGHT) && (j + nextArea != BOARD_WIDTH) && (boardM[i][j] == boardM[i + nextArea][j + nextArea])){
 					n.posX = i + nextArea;
 					n.posY = j + nextArea;
@@ -140,6 +157,7 @@ void Board::checkDiagonal(){
 					deleteLine();
 				}
 			}
+			//clear the vector after line deleted and reset nextArea to 1
 			nodesToDelete.clear();
 			nextArea = 1;
 		}
@@ -269,7 +287,6 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 	for (int i = (viableNodes.size() - 2); i >= 0; i--){
 		
 		if(viableNodes[i].count == pathToGoal.back().count - 1){
-			//checks adjacent cell of viableNodes
 			if(((viableNodes[i].posX == pathToGoal.back().posX + 1) && (viableNodes[i].posY == pathToGoal.back().posY)) ||
 				((viableNodes[i].posX == pathToGoal.back().posX - 1) && (viableNodes[i].posY == pathToGoal.back().posY)) ||
 				((viableNodes[i].posX == pathToGoal.back().posX) && (viableNodes[i].posY == pathToGoal.back().posY + 1)) ||
@@ -287,7 +304,7 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 	return pathToGoal;
 }
 
-
+//move node when path is found
 void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 	eventPosX = e->Y / 40;
 	eventPosY = e->X / 40;
@@ -302,8 +319,7 @@ void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 			int goalY = eventPosY;
 
 			std::vector<Node>startGoalPath = findPath(startX, startY, goalX, goalY);
-			int i = startGoalPath.size();
-			//if findPath returns a node and gets saved into 
+
 			if(startGoalPath.size() > 1){
 				
 				boardM[eventPosX][eventPosY] = boardM[initialEX][initialEY];
@@ -340,6 +356,8 @@ void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 		}
 	}
 	else{
+		//when cell selected is not 0 then the position of event gets saved into initial
+		//and selectedNode is set to true
 		if (boardM[eventPosX][eventPosY] != 0){
 			initialEX = eventPosX;
 			initialEY = eventPosY;
@@ -348,3 +366,21 @@ void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 	}
 }
 
+bool Board::endState(){
+	int count = 0;
+
+	for(int i = 0; i < BOARD_HEIGHT; i++){
+		for(int j = 0; j < BOARD_WIDTH; j++){
+			if (boardM[i][j] > 0){
+				count++;
+			}
+		}
+	}
+
+	if(count == 81){
+		return true;
+	}
+	else{
+		return false;
+	}
+}

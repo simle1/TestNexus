@@ -1,10 +1,18 @@
+/*
+	Leonard Sim
+	Nexus 2000, C++ Programming
+
+	Draws the board and nodes
+*/
+
+
 #include "Drawer.h"
 #include "Board.h"
 #include <iostream>
 
 using namespace std;
 
-
+//initialise the Drawer
 void Drawer::init(System::Drawing::Graphics ^g){
 	formGraphics = g;
 	border = gcnew Pen(Color::Gray);
@@ -12,6 +20,7 @@ void Drawer::init(System::Drawing::Graphics ^g){
 	texture = gcnew TextureBrush((Bitmap^)Image::FromFile("img/free.png"));
 }
 
+//draws on the Board depending what value is inside
 void Drawer::draw(Board &b){
 	for(char i = 0; i < BOARD_HEIGHT; i++){
 		for(char j = 0; j < BOARD_WIDTH; j++){

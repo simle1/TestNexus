@@ -1,3 +1,11 @@
+/*
+	Leonard Sim
+	Nexus 2000, C++ Programming
+	
+	Links togeher the drawer and board
+*/
+
+
 #include "GameManager.h"
 #include "Drawer.h"
 #include <stdlib.h>
@@ -9,6 +17,7 @@ GameManager::GameManager(void)
 	pBoard = new Board();
 }
 
+//starts the game
 void GameManager::gameStart(void){
 	gameStarted = true;
 	currentScore = 0;
@@ -16,11 +25,12 @@ void GameManager::gameStart(void){
 	addThreeNodes();
 }
 
-
+//draws onto pictureBox
 void GameManager::drawAll(){
 	pBoard->draw();
 }
 
+//generate 3 nodes when game starts
 void GameManager::addThreeNodes(){
 	srand (time(NULL));
 
@@ -29,18 +39,20 @@ void GameManager::addThreeNodes(){
 	}
 }
 
-void GameManager::isValidMove(System::Windows::Forms::MouseEventArgs^  e){
+//moves the node and checks if there are nodes of 5 in a line
+void GameManager::move(System::Windows::Forms::MouseEventArgs^  e){
 	pBoard->moveNode(e);
 	checkLines();
 	currentScore = pBoard->getCurrentScore();
 }
 
+//checks all direction to clear line
 void GameManager::checkLines(){
 	pBoard->checkVertical();
 	pBoard->checkHorizontal();
 	pBoard->checkDiagonal();
 }
 
-void GameManager::resetBoard(){
-	pBoard->initBoard();
+bool GameManager::endState(){
+	return pBoard->endState();
 }

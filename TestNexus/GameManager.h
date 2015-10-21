@@ -1,3 +1,10 @@
+/*
+	Leonard Sim
+	Nexus 2000, C++ Programming
+	
+*/
+
+
 #pragma once
 #include "Board.h"
 #include <vector>
@@ -19,10 +26,12 @@ public:
 	void gameStart(void);
 	void drawAll();
 	void addThreeNodes();
-	void isValidMove(System::Windows::Forms::MouseEventArgs^  e);
 	void checkLines();
-	void resetBoard();
+	void move(System::Windows::Forms::MouseEventArgs^  e);
+	void setGameStarted(bool state){ gameStarted = state; }
+
 	inline bool isGameStarted(){ return gameStarted; }
+	bool endState();
 	int getCurrentScore(){ return currentScore; }
 	int getHighScore(){ return pBoard->getHighScore(); }
 

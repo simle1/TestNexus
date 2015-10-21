@@ -82,7 +82,7 @@ namespace TestNexus {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 11);
+			this->pictureBox1->Location = System::Drawing::Point(12, 19);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(362, 362);
 			this->pictureBox1->TabIndex = 0;
@@ -92,14 +92,16 @@ namespace TestNexus {
 			// 
 			// button1
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Nina", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->button1->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(380, 271);
+			this->button1->ForeColor = System::Drawing::Color::Chartreuse;
+			this->button1->Location = System::Drawing::Point(380, 251);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(143, 30);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"START";
-			this->button1->UseVisualStyleBackColor = true;
+			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 			// 
 			// timer1
@@ -108,48 +110,65 @@ namespace TestNexus {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(380, 307);
+			this->button2->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->button2->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->button2->ForeColor = System::Drawing::Color::Chartreuse;
+			this->button2->Location = System::Drawing::Point(380, 287);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(143, 30);
 			this->button2->TabIndex = 2;
-			this->button2->Text = L"Reset";
-			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Text = L"RESET";
+			this->button2->UseVisualStyleBackColor = false;
 			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(380, 343);
+			this->button3->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->button3->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->button3->ForeColor = System::Drawing::Color::Chartreuse;
+			this->button3->Location = System::Drawing::Point(380, 323);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(143, 30);
 			this->button3->TabIndex = 3;
-			this->button3->Text = L"Exit";
-			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Text = L"EXIT";
+			this->button3->UseVisualStyleBackColor = false;
 			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click);
 			// 
 			// score
 			// 
 			this->score->AutoSize = true;
-			this->score->Location = System::Drawing::Point(397, 139);
+			this->score->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->score->ForeColor = System::Drawing::Color::Chartreuse;
+			this->score->Location = System::Drawing::Point(380, 123);
 			this->score->Name = L"score";
-			this->score->Size = System::Drawing::Size(47, 13);
+			this->score->Size = System::Drawing::Size(73, 23);
 			this->score->TabIndex = 4;
 			this->score->Text = L"Score: 0";
 			// 
 			// highScore
 			// 
 			this->highScore->AutoSize = true;
-			this->highScore->Location = System::Drawing::Point(397, 174);
+			this->highScore->Font = (gcnew System::Drawing::Font(L"Impact", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->highScore->ForeColor = System::Drawing::Color::Chartreuse;
+			this->highScore->Location = System::Drawing::Point(380, 169);
 			this->highScore->Name = L"highScore";
-			this->highScore->Size = System::Drawing::Size(72, 13);
+			this->highScore->Size = System::Drawing::Size(112, 23);
 			this->highScore->TabIndex = 5;
 			this->highScore->Text = L"High Score: 0";
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(400, 55);
+			this->label1->Font = (gcnew System::Drawing::Font(L"Impact", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->label1->ForeColor = System::Drawing::Color::Chartreuse;
+			this->label1->Location = System::Drawing::Point(380, 47);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(71, 13);
+			this->label1->Size = System::Drawing::Size(143, 34);
 			this->label1->TabIndex = 6;
 			this->label1->Text = L"NEXUS 2000";
 			// 
@@ -157,7 +176,8 @@ namespace TestNexus {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(535, 385);
+			this->BackColor = System::Drawing::Color::CadetBlue;
+			this->ClientSize = System::Drawing::Size(535, 395);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->highScore);
 			this->Controls->Add(this->score);
@@ -166,7 +186,7 @@ namespace TestNexus {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"Form1";
-			this->Text = L"Form1";
+			this->Text = L"NEXUS 2000";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -192,7 +212,7 @@ namespace TestNexus {
 
 	private: System::Void pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 				 pictureBox1->Invalidate();
-				 game.isValidMove(e);
+				 game.move(e);
 			 }
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -209,10 +229,17 @@ namespace TestNexus {
 			 }
 private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
 			 if(game.isGameStarted()){
-				 score->Text = "Score: " + game.getCurrentScore();
+				 if(game.endState() == false){
+					 score->Text = "Score: " + game.getCurrentScore();
 
-				 if(game.getCurrentScore() >= game.getHighScore()){
-					 highScore->Text = "High Score: " + game.getHighScore();
+					 if(game.getCurrentScore() >= game.getHighScore()){
+						 highScore->Text = "High Score: " + game.getHighScore();
+					 }
+				 }
+				 else{
+					 game.setGameStarted(false);
+					 timer1->Stop();
+					 MessageBox::Show("Game Over!","Message", MessageBoxButtons::OK);
 				 }
 			 }
 		 }

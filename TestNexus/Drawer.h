@@ -1,3 +1,10 @@
+/*
+	Leonard Sim
+	Nexus 2000, C++ Programming
+	
+*/
+
+
 #pragma once
 #ifndef _DRAWER
 #define _DRAWER
@@ -8,6 +15,7 @@ using namespace System::Drawing;
 
 ref class Drawer
 {
+	//texture is needed for importing images
 	static TextureBrush^ texture;
 	static Pen^ border;
 	static Graphics^ formGraphics;
