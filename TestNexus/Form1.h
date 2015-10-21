@@ -50,6 +50,8 @@ namespace TestNexus {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Label^  score;
+	private: System::Windows::Forms::Label^  highScore;
+	private: System::Windows::Forms::Label^  label1;
 	private: System::ComponentModel::IContainer^  components;
 	protected: 
 
@@ -73,6 +75,8 @@ namespace TestNexus {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->score = (gcnew System::Windows::Forms::Label());
+			this->highScore = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -125,17 +129,37 @@ namespace TestNexus {
 			// score
 			// 
 			this->score->AutoSize = true;
-			this->score->Location = System::Drawing::Point(397, 64);
+			this->score->Location = System::Drawing::Point(397, 139);
 			this->score->Name = L"score";
 			this->score->Size = System::Drawing::Size(47, 13);
 			this->score->TabIndex = 4;
 			this->score->Text = L"Score: 0";
+			// 
+			// highScore
+			// 
+			this->highScore->AutoSize = true;
+			this->highScore->Location = System::Drawing::Point(397, 174);
+			this->highScore->Name = L"highScore";
+			this->highScore->Size = System::Drawing::Size(72, 13);
+			this->highScore->TabIndex = 5;
+			this->highScore->Text = L"High Score: 0";
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(400, 55);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(71, 13);
+			this->label1->TabIndex = 6;
+			this->label1->Text = L"NEXUS 2000";
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(535, 385);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->highScore);
 			this->Controls->Add(this->score);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
@@ -150,14 +174,15 @@ namespace TestNexus {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-			
+				 if(!game.isGameStarted()){
 					Drawer::init(pictureBox1->CreateGraphics());
 					delete pictureBox1->Image;
 					pictureBox1->Image = nullptr;
+					game.gameStart();
 					pictureBox1->Invalidate();
-					game.addThreeNodes();
 
 					timer1->Start();
+				 }
 			 }
 	private: System::Void pictureBox1_Paint(Object^ sender, PaintEventArgs^ e) {
 			 Drawer::init(e->Graphics);
@@ -170,13 +195,25 @@ namespace TestNexus {
 				 game.isValidMove(e);
 			 }
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+
+				Drawer::init(pictureBox1->CreateGraphics());
+				delete pictureBox1->Image;
+				pictureBox1->Image = nullptr;
+				game.gameStart();
+				pictureBox1->Invalidate();
+				
+				timer1->Start();
 			 }
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 				 Application::Exit();
 			 }
 private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-			 if(!game.isGameStarted()){
+			 if(game.isGameStarted()){
 				 score->Text = "Score: " + game.getCurrentScore();
+
+				 if(game.getCurrentScore() >= game.getHighScore()){
+					 highScore->Text = "High Score: " + game.getHighScore();
+				 }
 			 }
 		 }
 };

@@ -9,11 +9,17 @@
 Board::Board(void)
 {
 	initBoard();
-	currentScore = 0;
 }
 
 void Board::initBoard(){
 	emptyCell.clear();
+	currentScore = 0;
+
+	if (currentScore < highScore){
+	}
+	else{
+		highScore = 0;
+	}
 
 	for (int i = 0; i < BOARD_HEIGHT; i++){
 		for (int j = 0; j < BOARD_WIDTH; j++){
@@ -143,8 +149,13 @@ void Board::checkDiagonal(){
 void Board::deleteLine(){
 	for(int i = 0; i < nodesToDelete.size(); i++){
 		boardM[nodesToDelete[i].posX][nodesToDelete[i].posY] = 0;
+		//adds 10 to currentScore for every node removed
+		currentScore += 10;
+
+		if(currentScore >= highScore){
+			highScore = currentScore;
+		}
 	}
-	currentScore += 25;
 }
 
 std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
@@ -160,11 +171,11 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 	n.count = 0;
 	viableNodes.push_back(n);
 
-	//goes through viableNodes and whatever that is adjacent to it gets saved into Node n 
-	//which gets pushed backed into adjacentNodes
 	for(int i = 0; i < viableNodes.size(); i++){
 		std::vector<Node> adjacentNodes;
 		
+		//viableNodes right,left,up,down gets pushed adjacentNodes
+
 		//right side
 		n.posX = viableNodes[i].posX + 1;
 		n.posY = viableNodes[i].posY;
@@ -188,8 +199,8 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 		n.posY = viableNodes[i].posY - 1;
 		n.count = viableNodes[i].count + 1;
 		adjacentNodes.push_back(n);
-		
-		
+
+		//loop through the adjacentNodes
 		for(int j = 0; j < adjacentNodes.size(); j++){
 			//when the adjacentNodes equal to the starting point then a path is found
 			if((adjacentNodes[j].posX == startX) && (adjacentNodes[j].posY == startY)){
@@ -199,9 +210,10 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 				//adjacentNodes gets saved back into n which gets pushed into the adjacentNodes list
 				n.posX = adjacentNodes[j].posX;
 				n.posY = adjacentNodes[j].posY;
+				//count value is the total all the added counts from viableNodes to the reach the destination
 				n.count = adjacentNodes[j].count;
 				
-				//clear the vector and pushback n then breaks out of for loop
+				//clear the vector and pushback n then breaks out loop
 				adjacentNodes.clear();
 				adjacentNodes.push_back(n);
 				break;
@@ -209,7 +221,7 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 			
 			//checks if the adjacent nodes lies beyond board
 			else if ((adjacentNodes[j].posX >= BOARD_HEIGHT) || (adjacentNodes[j].posY >= BOARD_WIDTH) || (adjacentNodes[j].posX < 0) || (adjacentNodes[j].posY < 0)){
-				//removes the node off the list when it is outside of board
+				//removes the index the list when it is outside of board
 				adjacentNodes.erase(adjacentNodes.begin() + j);
 				j--;
 			}
@@ -245,16 +257,19 @@ std::vector<Node> Board::findPath(int startX, int startY, int goalX, int goalY){
 		return std::vector<Node>();
 	}
 
-	//create pathToGoal vector
+	//the last element in viableNodes gets pushed into pathToGoal vector
 	std::vector<Node> pathToGoal;
 	Node n2;
 	n2.posX = viableNodes.back().posX;
 	n2.posY = viableNodes.back().posY;
 	n2.count = viableNodes.back().count;
 	pathToGoal.push_back(n2);
-
+	
+	//viableNodes
 	for (int i = (viableNodes.size() - 2); i >= 0; i--){
+		
 		if(viableNodes[i].count == pathToGoal.back().count - 1){
+			//checks adjacent cell of viableNodes
 			if(((viableNodes[i].posX == pathToGoal.back().posX + 1) && (viableNodes[i].posY == pathToGoal.back().posY)) ||
 				((viableNodes[i].posX == pathToGoal.back().posX - 1) && (viableNodes[i].posY == pathToGoal.back().posY)) ||
 				((viableNodes[i].posX == pathToGoal.back().posX) && (viableNodes[i].posY == pathToGoal.back().posY + 1)) ||
@@ -287,8 +302,9 @@ void Board::moveNode(System::Windows::Forms::MouseEventArgs^  e){
 			int goalY = eventPosY;
 
 			std::vector<Node>startGoalPath = findPath(startX, startY, goalX, goalY);
+			int i = startGoalPath.size();
 			//if findPath returns a node and gets saved into 
-			if(startGoalPath.size() > 0){
+			if(startGoalPath.size() > 1){
 				
 				boardM[eventPosX][eventPosY] = boardM[initialEX][initialEY];
 				boardM[initialEX][initialEY] = 0;

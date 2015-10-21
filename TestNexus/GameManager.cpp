@@ -7,11 +7,13 @@ GameManager::GameManager(void)
 {
 	pBoard = 0;
 	pBoard = new Board();
-	currentScore = pBoard->getCurrentScore();
 }
 
 void GameManager::gameStart(void){
 	gameStarted = true;
+	currentScore = 0;
+	pBoard->initBoard();
+	addThreeNodes();
 }
 
 
@@ -37,4 +39,8 @@ void GameManager::checkLines(){
 	pBoard->checkVertical();
 	pBoard->checkHorizontal();
 	pBoard->checkDiagonal();
+}
+
+void GameManager::resetBoard(){
+	pBoard->initBoard();
 }

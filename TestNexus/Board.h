@@ -23,11 +23,13 @@ class Board
 	std::vector<Node> nodesToDelete;
 	bool selectedNode;
 	int currentScore;
-	
+	int highScore;
+
 	int eventPosX;
 	int eventPosY;
 	int initialEX;
 	int initialEY;
+
 	
 
 public:
@@ -46,6 +48,7 @@ public:
 	void generateNode();
 	char cellType(int x, int y);
 	int getCurrentScore() { return currentScore; }
+	int getHighScore() { return highScore; }
 };
 
 #endif
